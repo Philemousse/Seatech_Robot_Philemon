@@ -31,18 +31,25 @@ namespace InterfaceFailbot
         {
             InitializeComponent();
             
-            // Initialisation du serialPort
+            //-----------------------------//
+            // Initialisation du serialPort//
+            //-----------------------------//
             serialPort1 = new ReliableSerialPort("COM10", 115200, Parity.None, 8, StopBits.One);
             serialPort1.Open();
             serialPort1.DataReceived += SerialPort1_DataReceived;
 
-            // Initialisation du timerAffichage
+            //--------------------------------//
+            //Initialisation du timerAffichage//
+            //--------------------------------//
             timerAffichage = new DispatcherTimer();
             timerAffichage.Interval = new TimeSpan(0, 0, 0, 0, 100);
             timerAffichage.Tick += TimerAffichage_Tick; ;
             timerAffichage.Start();
         }
 
+        //---------------//
+        //Évènement Timer//
+        //---------------//
         private void TimerAffichage_Tick(object sender, EventArgs e)
         {
             if (receivedText != "")
@@ -53,6 +60,9 @@ namespace InterfaceFailbot
             }
         }
 
+        //---------------------//
+        //Fonctions des boutons//
+        //---------------------//
         private void buttonEnvoyer_Click(object sender, RoutedEventArgs e)
         {
             // Couleur du bouton
@@ -69,7 +79,10 @@ namespace InterfaceFailbot
             // Appel de la fonction d'envoi du message
             SendMessage();
         }
-
+        private void buttonClear_Click(object sender, RoutedEventArgs e)
+        {
+            textBoxReception.Text = "";
+        }
         private void textBoxEmission_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
@@ -78,7 +91,9 @@ namespace InterfaceFailbot
             }
         }
 
-        // Fonction d'envoi du message
+        //----------------------------//
+        //Fonctions d'envoi du message//
+        //----------------------------//
         private void SendMessage()
         {
             // Envoi sur le port série
