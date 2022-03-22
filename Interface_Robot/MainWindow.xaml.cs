@@ -24,9 +24,12 @@ namespace InterfaceFailbot
     public partial class MainWindow : Window
     {
         bool toggle = false;
-        string receivedText = "";
         DispatcherTimer timerAffichage;
         ReliableSerialPort serialPort1;
+        //-------------------------------//
+        //Initialisation de l'objet Robot//
+        //-------------------------------//
+        Robot robot = new Robot();
         public MainWindow()
         {
             InitializeComponent();
@@ -52,11 +55,11 @@ namespace InterfaceFailbot
         //---------------//
         private void TimerAffichage_Tick(object sender, EventArgs e)
         {
-            if (receivedText != "")
+            if (robot.receivedText != "")
             {
                 // Ecriture du message reçu dans la boite de reception
-                textBoxReception.Text += "Reçu : " + receivedText + "\n";
-                receivedText = "";
+                textBoxReception.Text += "Reçu : " + robot.receivedText + "\n";
+                robot.receivedText = "";
             }
         }
 
@@ -102,7 +105,7 @@ namespace InterfaceFailbot
         }
         public void SerialPort1_DataReceived(object sender, DataReceivedArgs e)
         {
-            receivedText += Encoding.UTF8.GetString(e.Data, 0, e.Data.Length);
+            robot.receivedText += Encoding.UTF8.GetString(e.Data, 0, e.Data.Length);
         }
     }
 }
