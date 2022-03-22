@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
+using System.Text.Encoding.GetEncoding(1252);
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -57,9 +58,19 @@ namespace InterfaceFailbot
         {
             if (robot.receivedText != "")
             {
-                // Ecriture du message reçu dans la boite de reception
+                // Ecriture du message reçu dans la boite de réception
                 textBoxReception.Text += "Reçu : " + robot.receivedText + "\n";
                 robot.receivedText = "";
+            }
+            if (robot.byteListReceived != [])
+            {
+                // Ecriture du message reçu dans la boite de réception
+                textBoxReception.Text += "Reçu : ";
+                for (int k = 0; k < robot.byteListReceived.Length; k++)
+                {
+                    textBoxReception.Text += robot.byteListReceived.Dequeue();
+                }
+                textBoxReception.Text += "\n";
             }
         }
 
@@ -118,7 +129,10 @@ namespace InterfaceFailbot
         //---------------------------------//
         public void SerialPort1_DataReceived(object sender, DataReceivedArgs e)
         {
-            robot.receivedText += Encoding.UTF8.GetString(e.Data, 0, e.Data.Length);
+            for (int k = 0; k < e.Data.Length; k++)
+            {
+                robot.byteListReceived.Enqueue(e.Data[k]);
+            }
         }
     }
 }
