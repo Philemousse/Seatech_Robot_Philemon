@@ -82,6 +82,16 @@ namespace InterfaceFailbot
             // Appel de la fonction d'envoi du message
             SendMessage();
         }
+        private void buttonTest_Click(object sender, RoutedEventArgs e)
+        {
+            byte[] byteList = new byte[20];
+            for (int k=0; k<20; k++)
+            {
+                byteList[k] = (byte)(2 * k);
+            }
+            serialPort1.Write(byteList,0,byteList.Length);
+        }
+
         private void buttonClear_Click(object sender, RoutedEventArgs e)
         {
             textBoxReception.Text = "";
@@ -103,6 +113,9 @@ namespace InterfaceFailbot
             serialPort1.WriteLine (textBoxEmission.Text);
             textBoxEmission.Text = "";
         }
+        //---------------------------------//
+        //Fonctions de reception du message//
+        //---------------------------------//
         public void SerialPort1_DataReceived(object sender, DataReceivedArgs e)
         {
             robot.receivedText += Encoding.UTF8.GetString(e.Data, 0, e.Data.Length);
