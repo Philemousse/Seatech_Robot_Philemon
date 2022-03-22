@@ -45,6 +45,12 @@ namespace InterfaceFailbot
 
         private void TimerAffichage_Tick(object sender, EventArgs e)
         {
+            if (receivedText != "")
+            {
+                // Ecriture du message reçu dans la boite de reception
+                textBoxReception.Text += "Reçu : " + receivedText + "\n";
+                receivedText = "";
+            }
         }
 
         private void buttonEnvoyer_Click(object sender, RoutedEventArgs e)
@@ -75,8 +81,6 @@ namespace InterfaceFailbot
         // Fonction d'envoi du message
         private void SendMessage()
         {
-            // Envoi du texte de la boite d'émission dans la box de réception
-            textBoxReception.Text += "Reçu : " + textBoxEmission.Text + "\n";
             // Envoi sur le port série
             serialPort1.WriteLine (textBoxEmission.Text);
             textBoxEmission.Text = "";
