@@ -68,7 +68,7 @@ namespace InterfaceFailbot
                 for (int k = 0; k < robot.byteListReceived.Count; k++)
                 {
                     var b = robot.byteListReceived.Dequeue();
-                    textBoxReception.Text += "0x"+ b.ToString("X4") + " ";
+                    textBoxReception.Text += "0x"+ b.ToString("X2") + " ";
                 }
             }
         }
