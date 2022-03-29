@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
-using System.Text.Encoding.GetEncoding(1252);
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -38,7 +37,7 @@ namespace InterfaceFailbot
             //-----------------------------//
             // Initialisation du serialPort//
             //-----------------------------//
-            serialPort1 = new ReliableSerialPort("COM10", 115200, Parity.None, 8, StopBits.One);
+            serialPort1 = new ReliableSerialPort("COM9", 115200, Parity.None, 8, StopBits.One);
             serialPort1.Open();
             serialPort1.DataReceived += SerialPort1_DataReceived;
 
@@ -62,15 +61,15 @@ namespace InterfaceFailbot
                 textBoxReception.Text += "Reçu : " + robot.receivedText + "\n";
                 robot.receivedText = "";
             }
-            if (robot.byteListReceived != [])
+            while (robot.byteListReceived.Count>0)
             {
                 // Ecriture du message reçu dans la boite de réception
-                textBoxReception.Text += "Reçu : ";
-                for (int k = 0; k < robot.byteListReceived.Length; k++)
+                //textBoxReception.Text += "Reçu : ";
+                for (int k = 0; k < robot.byteListReceived.Count; k++)
                 {
-                    textBoxReception.Text += robot.byteListReceived.Dequeue();
+                    var b = robot.byteListReceived.Dequeue();
+                    textBoxReception.Text += "0x"+ b.ToString("X4") + " ";
                 }
-                textBoxReception.Text += "\n";
             }
         }
 

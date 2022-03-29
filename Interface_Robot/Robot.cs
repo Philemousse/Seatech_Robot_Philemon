@@ -12,11 +12,10 @@ namespace InterfaceFailbot
         public float ditanceTelemetreDroit;
         public float distanceTelemetreCentre;
         public float distanceTelemetreGauche;
-        public Queue<byte> byteListReceived;
+        public Queue<byte> byteListReceived = new Queue<byte>();
 
         public Robot()
         {
-            Queue<byte> byteListReceived = new Queue<byte>();
         }
     }
 }
